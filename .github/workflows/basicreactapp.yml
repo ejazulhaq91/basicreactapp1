@@ -3,33 +3,25 @@ name: CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
-
     - name: installing Node
       uses: actions/setup-node@v2-beta
       with:
         node-version: 12
-
     - name: Prepare for yarn installation
-      uses: borales/actions-yarn@v2.0.0
+      uses: borales/actions-yarn@v2.1.0
       with:
         cmd: install
-    
     - name: Building Application
       run: yarn build
-      
     - name: Surge Installation
       run: npm install -g surge
-    
     - name: Surge Deployment
-      run: surge ./build http://myreactapp1.surge.sh --token ${{secrets.SURGE_TOKEN_1}}
+      run: surge ./build myreactapp1.surge.sh --token ${{secrets.SURGE_TOKEN_1}}
        
         
